@@ -25,8 +25,8 @@ class Jury
     end
   end
 
-  def announce_winner(final_votes)
-    winner = final_votes.key(final_votes.values.max)
+  def announce_winner(votes)
+    winner = votes.key(votes.values.max)
     puts "#{winner} is the winner of Survivor!".green
     winner
   end
