@@ -4,8 +4,6 @@ require_relative 'contestant'
 require_relative 'jury'
 require_relative 'colorizr'
 
-String.create_colors
-
 # After your tests pass, uncomment this code below
 #=========================================================
 # Create an array of twenty hopefuls to compete on the island of Borneo
@@ -30,7 +28,7 @@ def phase_one
   rounds.times do
     losing_tribe = @borneo.immunity_challenge
     puts "#{losing_tribe} lost the immunity challange.".blue
-    tribal_council(losing_tribe)
+    losing_tribe.tribal_council
   end
   rounds
 end
@@ -42,7 +40,7 @@ def phase_two
   rounds = 3
   rounds.times do
     immune_contestant = @borneo.individual_immunity_challenge
-    tribal_council(@merge_tribe, immune_contestant)
+    @merge_tribe.tribal_council(immune_contestant)
   end
   rounds
 end
@@ -52,17 +50,9 @@ def phase_three
   rounds = 7
   rounds.times do
     immune_contestant = @borneo.individual_immunity_challenge
-    @jury.members << tribal_council(@merge_tribe, immune_contestant)
+    @jury.members << @merge_tribe.tribal_council(immune_contestant)
   end
   rounds
-end
-
-def tribal_council(tribe, immune_contestant = nil)
-  tribe.members.delete(immune_contestant) if immune_contestant
-  eliminated_contestant = tribe.members.shuffle!.first
-  tribe.members << immune_contestant if immune_contestant
-  puts "#{eliminated_contestant} has been eliminated in the tribal council".red
-  tribe.members.delete(eliminated_contestant)
 end
 
 # If all the tests pass, the code below should run the entire simulation!!
